@@ -36,7 +36,7 @@ The device will be stored in Bassam's lab, on CMU's campus. In the case of physi
 
 6. Describe what the script you wrote does (document it.) 
 
-`face_detect.py` takes two optional arguments: a path or `--capture`. If a path is provided, an image is loaded from the given path. If `--capture` is set, a new image is taken from the camera. In either case, if a face is detected, its embedding is compared against an embedding of Alex's face, and the euclidean distance is outputted. Also, copy of the image is outputted with landmarks annotated over the face. 
+`face_detect.py` takes two optional arguments: a path or `--capture`. If a path is provided, an image is loaded from the given path. If `--capture` is set, a new image is taken from the camera. In either case, if a face is detected, its embedding is compared against an embedding of Alex's face, and the euclidean distance is outputted. Also, a copy of the image is outputted with landmarks annotated over the face. 
 
 `generate_text.py` loads a pipeline for summarization from Huggingface Transfomers library. It loads Distill-BART model to generate the summary of a given text.
 
