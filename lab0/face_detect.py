@@ -1,6 +1,10 @@
 import cv2, os, sys
+import numpy as np
 from PIL import Image
-from facenet_pytorch import MTCNN, InceptionResnetV1
+from facenet_pytorch import MTCNN
+import argparse
+import torch
+from matplotlib import pyplot as plt
 
 def gstreamer_pipeline(capture_width=1280, capture_height=720, 
                        display_width=1280, display_height=720,
@@ -32,12 +36,39 @@ def capture_image():
 
   return img
 
+parser = argparse.ArgumentParser(description="Detects faces and produces embeddings for those faces. If neither argument is provided, Alex will be detected on alex.png")
+parser.add_argument('--path', help="Path to an image to detect a face on and output an embedding for that face.", default=None)
+parser.add_argument('--capture', action='store_true', default=False, help="Capture a new image and detect a face on that image. If provided, path will be ignored. The image will be outputted as output.png")
+
+args = parser.parse_args()
+
+if args.capture:
+  img = capture_image()
+elif args.path is not None:
+  img = Image.open(args.path)
+else:
+  img = Image.open("alex.png")
+
+mtcnn = MTCNN(select_largest=False, device='cpu')
+face, prob = mtcnn(img, return_prob=True)
+boxes, probs, landmarks = mtcnn.detect(img, landmarks=True)
+
+alex_emb = mtcnn(Image.open("alex.png"))
 
 
-img = Image.open("alex.png")
-
-mtcnn = MTCNN(select_largest=False, device='cuda')
-face = mtcnn(img)
-
+print(f"Face probability is {prob}")
 if face is not None:
-    print(f"Detected a face! Its embedding is {face}")
+  dist = torch.sqrt(((alex_emb - face) ** 2).sum())
+  print("Detected a face!")
+  print(f"The distance between this face and alex is {dist}")
+
+  fig, ax = plt.subplots(figsize=(16, 12))
+  ax.imshow(img)
+  ax.axis('off')
+
+  for box, landmark in zip(boxes, landmarks):
+    ax.scatter(*np.meshgrid(box[[0, 2]], box[[1, 3]]))
+    ax.scatter(landmark[:, 0], landmark[:, 1], s=8)
+  plt.savefig("landmarks.png")
+else:
+  print("Did not detect a face. Try taking off your mask?")
