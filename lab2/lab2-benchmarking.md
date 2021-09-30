@@ -8,27 +8,31 @@ Include any code you write to perform this benchmarking in your Canvas submissio
 
 Group name:
 ---
-Group members present in lab today:
+Group members present in lab today: Alex, Bassam, Navya
 
 1: Models
 ----
 1. Which models and/or model variants will your group be benchmarking? Please be specific.
 
-We will be using the following audio embedding models: Mockingjay
+We will be using the following audio embedding models: Mockingjay, Tera, HuBERT, wav2vec 2.0, Log Mel
 
-This link gave a pretty comprehensive breakdown of the different audio embedding models that are available and how they differ. We referred
+This link gave a pretty comprehensive breakdown of the different audio embedding models that are available and how they differ: https://github.com/s3prl/s3prl
 
 Masked Reconstruction
 Masked Prediction
-Contrastic Predictive Coding
+Autoregressive Reconstruction
+Contrastive Predictive Coding
 
 2. Why did you choose these models?
 
-We chose these models because each represents a popular method of audio embedding but they all use different methods of https://github.com/s3prl/s3prl#used-by
+We chose these models because each represents a popular methods of audio embedding but they all use different methods of computing when training. 
+
+
+HuBERT outperforms DiscreteBERT
 
 3. For each model, you will measure parameter count, inference latency, and energy use. For latency and energy, you will also be varying a parameter such as input size or batch size. What are your hypotheses for how the models will compare according to these metrics? Do you think latency will track with energy use, and parameter count? Explain.
 
-
+We think that some of the more lightweight models, or at least those based on conventional methods of audio analysis, such as Log Mel or wav2vec 2.0 will have a lower parameter count, lower latency, and thus lower energy usage when producing the embedding.
 
 2: Parameter count
 ----
@@ -37,8 +41,20 @@ We chose these models because each represents a popular method of audio embeddin
    num_params = sum([np.prod(p.size()) for p in model.parameters()])
    ```
    Report your results in a table.
-2. Does this number account for any parameter sharing that might be part of the model you're benchmarking? 
+
+<!-- Insert image here containing the parameter numbers of our models -->
+![image info](./parameters.png)
+
+
+2. Does this number account for any parameter sharing that might be part of the model you're benchmarking?
+
+
+
+
 3. Any difficulties you encountered here? Why or why not?
+
+
+
 
 3: Latency
 ----
@@ -54,6 +70,11 @@ We chose these models because each represents a popular method of audio embeddin
     Best practice is to not include the first pass in timing, since it may include data loading, caching, etc.* and to report the mean and standard deviation of *k* repetitions. For the purposes of this lab, *k*=10 is reasonable. (If standard deviation is high, you may want to run more repetitions. If it is low, you might be able to get away with fewer repetitions.)
     
     For more information on `timeit` and measuring elapsed time in Python, you may want to refer to [this Stack Overflow post](https://stackoverflow.com/questions/7370801/how-to-measure-elapsed-time-in-python).
+
+
+
+
+
 2. Repeat this, varying one of: batch size, input size, other. Plot the results (sorry this isn't a notebook):
    ```
    import matplotlib.pyplot as plt
@@ -68,7 +89,18 @@ We chose these models because each represents a popular method of audio embeddin
    plt.savefig(plot_fname)
    # or plot.show() if you e.g. copy results to laptop
    ```
+
+<!-- Put plot of latencies here -->
+![image info](./latencies.png)
+
+
+
+
 4. Any difficulties you encountered here? Why or why not?
+
+
+
+
 
 4: Energy use
 ----
