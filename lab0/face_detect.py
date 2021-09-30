@@ -39,6 +39,7 @@ def capture_image():
 parser = argparse.ArgumentParser(description="Detects faces and produces embeddings for those faces. If neither argument is provided, Alex will be detected on alex.png")
 parser.add_argument('--path', help="Path to an image to detect a face on and output an embedding for that face.", default=None)
 parser.add_argument('--capture', action='store_true', default=False, help="Capture a new image and detect a face on that image. If provided, path will be ignored. The image will be outputted as output.png")
+parser.add_argument('--cuda', action='store_true', default=False, help="Use cuda for face detection. May be a lot slower. Default is False.")
 
 args = parser.parse_args()
 
@@ -49,7 +50,11 @@ elif args.path is not None:
 else:
   img = Image.open("alex.png")
 
-mtcnn = MTCNN(select_largest=False, device='cpu')
+if args.cuda:
+  mtcnn = MTCNN(select_largest=False, device='cuda')
+else:
+  mtcnn = MTCNN(select_largest=False, device='cpu')
+
 face, prob = mtcnn(img, return_prob=True)
 boxes, probs, landmarks = mtcnn.detect(img, landmarks=True)
 
@@ -58,7 +63,7 @@ alex_emb = mtcnn(Image.open("alex.png"))
 
 print(f"Face probability is {prob}")
 if face is not None:
-  dist = torch.sqrt(((alex_emb - face) ** 2).sum())
+  dist = (face-alex_emb).norm()
   print("Detected a face!")
   print(f"The distance between this face and alex is {dist}")
 
