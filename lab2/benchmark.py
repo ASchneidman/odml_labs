@@ -22,6 +22,7 @@ if __name__ == "__main__":
 
     # Get parameter count
     num_params = sum([np.prod(p.size()) for p in model.parameters()])
+    print(f"Paremeter count for model {model_name}: {num_params}")
 
     # first pass to "warm up"
     with torch.no_grad():
