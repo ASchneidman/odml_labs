@@ -14,9 +14,14 @@ Group members present in lab today: Alex, Bassam, Navya
 ----
 1. Which models and/or model variants will your group be benchmarking? Please be specific.
 
-We will be using the following audio embedding models: Mockingjay, Tera, HuBERT, wav2vec 2.0, Log Mel
+We will be using the following audio embedding models: HuBERT, wav2vec 2.0, Log Mel
+
+
+
 
 This link gave a pretty comprehensive breakdown of the different audio embedding models that are available and how they differ: https://github.com/s3prl/s3prl
+
+
 
 Masked Reconstruction
 Masked Prediction
@@ -25,10 +30,10 @@ Contrastive Predictive Coding
 
 2. Why did you choose these models?
 
-We chose these models because each represents a popular methods of audio embedding but they all use different methods of computing when training. 
+We intended to use some of the larger transformer models for our audio embedding like Mockingjay, Tera, and AudioAlbert however we chose these models because _________ 
 
 
-HuBERT outperforms DiscreteBERT
+
 
 3. For each model, you will measure parameter count, inference latency, and energy use. For latency and energy, you will also be varying a parameter such as input size or batch size. What are your hypotheses for how the models will compare according to these metrics? Do you think latency will track with energy use, and parameter count? Explain.
 
