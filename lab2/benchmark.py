@@ -31,10 +31,30 @@ if __name__ == "__main__":
 
 
     # benchmark timing
+    # with torch.no_grad():
+    #     times = []
+    #     for _ in range(args.timing_iters):
+    #         wavs = [torch.randn(args.input_size, dtype=torch.float) for _ in range(args.batch_size)]
+    #         start = timer()
+    #         model(wavs)
+    #         end = timer()
+
+    #         cpu_inference_time = end-start
+    #         times.append(cpu_inference_time)
+
+    #     times = np.array(times)
+
+    #     print(f"Data for model {model_name} with input size {args.input_size} and batch size {args.batch_size}.")
+    #     print(f"Average CPU Inference Time: {np.mean(times)} seconds.")
+    #     print(f"Standard Deviation of CPU Inference Times: {np.std(times)} seconds.")
+
+
+    
     with torch.no_grad():
         times = []
-        for _ in range(args.timing_iters):
-            wavs = [torch.randn(args.input_size, dtype=torch.float) for _ in range(args.batch_size)]
+        X = np.arange(1000, 2000, 1000)
+        for i in range(len(X)):
+            wavs = [torch.randn(X[i], dtype=torch.float) for _ in range(args.batch_size)]
             start = timer()
             model(wavs)
             end = timer()
@@ -48,4 +68,11 @@ if __name__ == "__main__":
         print(f"Average CPU Inference Time: {np.mean(times)} seconds.")
         print(f"Standard Deviation of CPU Inference Times: {np.std(times)} seconds.")
 
-    
+        plot_fname = "plot.png"
+        x = X # e.g. batch sizes
+        y = times # mean timings
+       
+        plt.plot(x, y, 'o')
+        plt.xlabel('Input Size')
+        plt.ylabel('Inference Times')
+        plt.savefig(plot_fname)
