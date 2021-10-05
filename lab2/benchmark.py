@@ -3,9 +3,8 @@ import s3prl.hub as hub
 import torch
 import numpy as np
 import argparse
-import matplotlib.pyplot as plt
 from timeit import default_timer as timer
-
+import matplotlib.pyplot as plt
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Benchmark script.')
     parser.add_argument("model_name", help="Name of model to benchmark")
