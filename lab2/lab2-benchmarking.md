@@ -14,25 +14,16 @@ Group members present in lab today: Alex, Bassam, Navya
 ----
 1. Which models and/or model variants will your group be benchmarking? Please be specific.
 
-We will be using the following audio embedding models: HuBERT, wav2vec 2.0, Log Mel
-
-
-
+We will be using the following audio embedding models: wav2vec, wav2vec 2.0, wav2vec_xlsr, vq_wav2vec, Modified_cpc, and HuBERT.  
 
 This link gave a pretty comprehensive breakdown of the different audio embedding models that are available and how they differ: https://github.com/s3prl/s3prl
 
 
-
-Masked Reconstruction
-Masked Prediction
-Autoregressive Reconstruction
-Contrastive Predictive Coding
-
 2. Why did you choose these models?
 
-We intended to use some of the larger transformer models for our audio embedding like Mockingjay, Tera, and AudioAlbert however we chose these models because _________ 
+We intended to use some of the larger transformer models for our audio embedding such as Mockingjay, Tera, and AudioAlbert however but we were forced to limit our scope of model choices because of dependency issues with the s3prl speech toolkit library. Alex discovered that several of the models (mentioned above) require the `mkl_fft` library which is only available on Intel platforms. This limits the models available to us since our device has an ARM processor.
 
-
+After experimenting with the models that we could actually use with the s3prl unified framework, we found that the 6 models mentioned before are what we can use.
 
 
 3. For each model, you will measure parameter count, inference latency, and energy use. For latency and energy, you will also be varying a parameter such as input size or batch size. What are your hypotheses for how the models will compare according to these metrics? Do you think latency will track with energy use, and parameter count? Explain.
@@ -53,12 +44,12 @@ We think that some of the more lightweight models, or at least those based on co
 
 2. Does this number account for any parameter sharing that might be part of the model you're benchmarking?
 
-
+I don't think so. `model.parameters()` in PyTorch returns the number of trainable parameters which may not include shared weights.
 
 
 3. Any difficulties you encountered here? Why or why not?
 
-
+Nope. This was pretty straightforward.
 
 
 3: Latency
@@ -75,9 +66,6 @@ We think that some of the more lightweight models, or at least those based on co
     Best practice is to not include the first pass in timing, since it may include data loading, caching, etc.* and to report the mean and standard deviation of *k* repetitions. For the purposes of this lab, *k*=10 is reasonable. (If standard deviation is high, you may want to run more repetitions. If it is low, you might be able to get away with fewer repetitions.)
     
     For more information on `timeit` and measuring elapsed time in Python, you may want to refer to [this Stack Overflow post](https://stackoverflow.com/questions/7370801/how-to-measure-elapsed-time-in-python).
-
-
-
 
 
 2. Repeat this, varying one of: batch size, input size, other. Plot the results (sorry this isn't a notebook):
@@ -103,8 +91,7 @@ We think that some of the more lightweight models, or at least those based on co
 
 4. Any difficulties you encountered here? Why or why not?
 
-
-
+We decided to vary the input size to our model and then measure inference times.
 
 
 4: Energy use
@@ -127,6 +114,10 @@ We think that some of the more lightweight models, or at least those based on co
 5: Discussion
 ----
 1. Analyze the results. Do they support your hypotheses? Why or why not? Did you notice any strange or unexpected behavior? What might be the underlying reasons for that behavior?
+
+
+
+
 
 5: Extra
 ----
