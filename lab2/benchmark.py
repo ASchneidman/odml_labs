@@ -3,6 +3,7 @@ import s3prl.hub as hub
 import torch
 import numpy as np
 import argparse
+import matplotlib.pyplot as plt
 from timeit import default_timer as timer
 
 if __name__ == "__main__":
@@ -52,7 +53,7 @@ if __name__ == "__main__":
     
     with torch.no_grad():
         times = []
-        X = np.arange(1000, 2000, 1000)
+        X = np.arange(1000, 11000, 1000)
         for i in range(len(X)):
             wavs = [torch.randn(X[i], dtype=torch.float) for _ in range(args.batch_size)]
             start = timer()
@@ -63,12 +64,13 @@ if __name__ == "__main__":
             times.append(cpu_inference_time)
 
         times = np.array(times)
+        np.savez('./{}.npz'.format(model_name), X, times)
 
         print(f"Data for model {model_name} with input size {args.input_size} and batch size {args.batch_size}.")
         print(f"Average CPU Inference Time: {np.mean(times)} seconds.")
         print(f"Standard Deviation of CPU Inference Times: {np.std(times)} seconds.")
 
-        plot_fname = "plot.png"
+        plot_fname = "{}_plot.png".format(model_name)
         x = X # e.g. batch sizes
         y = times # mean timings
        
