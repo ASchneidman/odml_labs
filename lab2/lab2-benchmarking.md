@@ -99,23 +99,12 @@ Yes. We found that some of the models were so big that we had to delete them fro
 4: Energy use
 ----
 1. Compute the energy use of each model. You can use the `powertop` tool on RPi and Jetson (must be run as root):
-    ```
-    sudo apt install powertop
-    ```
-    and/or the `jtop` tool on Jetson (see installation instructions [here](https://github.com/rbonghi/jetson_stats/)). 
     
-    Follow the same procedure as you used to compute latency, but this time compute energy: (avg) watts * time. You will likely need to sample power a number of times throughout each inference, and average.
-    
-    By default, `powertop` takes measurements every 20 seconds. You can change it with the `--time` parameter, which specifies number of seconds and allows for non-integer intervals (0.5 for half a second) e.g. to poll every second for 10 seconds and write to 10 csv files:
-    ```
-    sudo powertop --time=1 --csv=powertop.log --iteration=10
-    ```
-    Here is a link to the [`powertop` users guide](https://01.org/sites/default/files/page/powertop_users_guide_201412.pdf) [PDF].
-
+    We are not able to compute the energy consumption on our Jetson 2GB nano device since it doesn't have the required power sensor controller. 
 
 2. Any difficulties you encountered here? Why or why not?
 
-
+We installed jtop on our jetson device. We used the python script(provided by Nvidia) to track the power consumption using jtop, but it did not give any power output in the logs as the device doesn't have the required power controller. We also looked into the Nvidia documentation on software based power consumtion modelling. The original Jetson Nano have a three-channel INA3221 power monitor at I2C address 0x40. We tried to read power information directly from the sysfs nodes mapped to the power interface, but got the error that the folder('/sys/bus/i2c/drivers/ina3221x/6-0040/iio\:device0/in_power2_input") doesn't exist. 
 
 
 5: Discussion
