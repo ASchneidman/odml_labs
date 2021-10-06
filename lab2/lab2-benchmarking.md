@@ -83,6 +83,8 @@ Nope. This was pretty straightforward.
    # or plot.show() if you e.g. copy results to laptop
    ```
 
+We decided to vary the input size to our model and then measure inference times.
+
 <!-- Put plot of latencies here -->
 ![image info](./latencies.png)
 
@@ -91,7 +93,7 @@ Nope. This was pretty straightforward.
 
 4. Any difficulties you encountered here? Why or why not?
 
-We decided to vary the input size to our model and then measure inference times.
+Yes. We found that some of the models were so big that we had to delete them from the cache in order to load and test others. Also, we encountered very long load times in just loading some of the models to the cache. After that though, the inference times for our models were quick and the rest of the tests ran pretty smoothly.
 
 
 4: Energy use
@@ -109,7 +111,12 @@ We decided to vary the input size to our model and then measure inference times.
     sudo powertop --time=1 --csv=powertop.log --iteration=10
     ```
     Here is a link to the [`powertop` users guide](https://01.org/sites/default/files/page/powertop_users_guide_201412.pdf) [PDF].
+
+
 2. Any difficulties you encountered here? Why or why not?
+
+
+
 
 5: Discussion
 ----
