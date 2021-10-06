@@ -111,7 +111,13 @@ We installed jtop on our jetson device. We used the python script(provided by Nv
 ----
 1. Analyze the results. Do they support your hypotheses? Why or why not? Did you notice any strange or unexpected behavior? What might be the underlying reasons for that behavior?
 
+Yes. Not surprisingly, the models with fewer parameters had faster inference times. The Wav2Vec XLSR had the highest inferences times of about 6 seconds for the largest input of a 10000 float tensor. Again, this is not surprising since it has nearly 10x the number of parameters (about 300 million) as the smallest model, Modified CPC, which had a corresponding inference time of about 0.45 seconds for it's rougly 30 million parameters.
 
+The only strange (if not annoying behavior) is that it took a long time to load the models into the cache of our Jetson Nano. After that, the inference ran fairly smoothly. I think the main bottle neck is the bus connection between RAM and memory because the time to load the model into RAM takes upwards of 10 minutes.
+
+With regards to the inference times, the general trend is that the inference times increased linearly with the size of the input of our randomized audio signal. We kept a constant batch size of 10 and simply varied the input size of our signal from 1000 to 10000 floats in incremements of 1000. 
+
+We are thinking about switching to the 4 GB Jetson Nano with a 64 GB SD card so we'll have faster load times and more space in memory to hold more than 1 model.
 
 
 
