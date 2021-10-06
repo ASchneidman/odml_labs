@@ -83,7 +83,7 @@ Nope. This was pretty straightforward.
    # or plot.show() if you e.g. copy results to laptop
    ```
 
-We decided to vary the input size to our model and then measure inference times.
+We decided to vary the input size to our model and then measure inference times. We varied input size since our application (speech diarization in production) will not be batched. 
 
 <!-- Put plot of latencies here -->
 ![image info](./latencies.png)
