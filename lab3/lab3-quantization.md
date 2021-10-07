@@ -10,11 +10,21 @@ Group name:
 ---
 Group members present in lab today:
 
+Alex, Navya, Bassam
+
 1: Models
 ----
 1. Which models and/or model variants will your group be studying in this lab? What is the original bit width of the models, and what precision will you be quantizing to? What parts of the model will be quantized (e.g. parameters, activations, ...)? Please be specific.
+
+We will be studying Wav2Vec. TODO: WHAT PARTS WILL BE QUANTIZED?
+
 2. Why did you choose these models?
+
+We chose Wav2Vec because our expirements from lab2 showed that its inference times did not blow up too much compared to other models with increasing input size. 
+
 3. For each model, you will measure model size (in (mega,giga,...)bytes), and inference latency. You will also be varying a parameter such as input size or batch size. What are your hypotheses for how the quantized models will compare to non-quantized models according to these metrics? Do you think latency will track with model size? Explain.
+
+Our inference time experiments from lab2 were done on CPU. Thus, we expect inference times to be lower for quantized models using int8 precision than the original precision models. We won't be varying batch size since our application will see non-batched inputs. We observed that latency tracked with model size from lab2, so we expect a similar effect for this lab.  
 
 2: Quantization in PyTorch
 ----
