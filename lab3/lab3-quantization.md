@@ -16,7 +16,7 @@ Alex, Navya, Bassam
 ----
 1. Which models and/or model variants will your group be studying in this lab? What is the original bit width of the models, and what precision will you be quantizing to? What parts of the model will be quantized (e.g. parameters, activations, ...)? Please be specific.
 
-We will be studying Wav2Vec. TODO: WHAT PARTS WILL BE QUANTIZED?
+We will be studying wav2vec, wav2vec2, wav2vec_xlsr, hubert, and modified_cpc. We will be quantizing the parameters of the linear layers to int8. 
 
 2. Why did you choose these models?
 
@@ -57,11 +57,11 @@ We were able to quantize on our local device however. The only challenge was ove
    du -h <path-to-serialized-model>
    ```
 
-Wav2Vec went from 320Mb to 124Mb. 
+wav2vec went from 320Mb to 124Mb. wav2vec2 went from 363Mb to 117Mb. vq_wav2vec went from 130Mb to 127Mb. wav2vec2_xlsr went from 1.2Gb to 341Mb. Hubert went from 361Mb to 117Mb. modified_cpc went from 7Mb to 7Mb. 
 
 2. Any difficulties you encountered here? Why or why not?
 
-Other than loading the model onto CPU, no other difficulties. 
+There was some difficulty loading the models onto CPU. Once that was solved, due to this issue: https://github.com/pytorch/fairseq/issues/1901, we were unable to quantize three of the six models since they depend on Attention mechanisms (wav2vec_xlsr, wav2vec, and hubert). 
 
 4: Latency
 ----
@@ -78,6 +78,10 @@ Other than loading the model onto CPU, no other difficulties.
     Best practice is to not include the first pass in timing, since it may include data loading, caching, etc.* and to report the mean and standard deviation of *k* repetitions. For the purposes of this lab, *k*=10 is reasonable. (If standard deviation is high, you may want to run more repetitions. If it is low, you might be able to get away with fewer repetitions.)
     
     For more information on `timeit` and measuring elapsed time in Python, you may want to refer to [this Stack Overflow post](https://stackoverflow.com/questions/7370801/how-to-measure-elapsed-time-in-python).
+
+
+   ![Inference Times](./inferencetimes.png)
+
 2. Repeat this, varying one of: batch size, input size, other. Plot the results (sorry this isn't a notebook):
    ```
    import matplotlib.pyplot as plt
@@ -92,11 +96,18 @@ Other than loading the model onto CPU, no other difficulties.
    plt.savefig(plot_fname)
    # or plot.show() if you e.g. copy results to laptop
    ```
+
+   ![Times](plot.png)
+
 4. Any difficulties you encountered here? Why or why not?
+
+We were able to apply the same code from last lab to perform the measurements and plotting, so no additional difficulties other than those mentioned in the first section. 
 
 5: Discussion
 ----
 1. Analyze the results. Do they support your hypotheses? Why or why not? Did you notice any strange or unexpected behavior? What might be the underlying reasons for that behavior?
+
+We did not see significant speedups over the unquantized models, which did not support our hypothesis. There may be significant algorithmic overhead for these language models which will not be helped by making the linear layers quantized. However, model disk sizes were significantly reduced, which could be beneificial on our device which is already disk size constrained. 
 
 5: Extra
 ----
