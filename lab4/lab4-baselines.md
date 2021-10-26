@@ -15,15 +15,15 @@ Group members present in lab today: Alex, Navya, Bassam
     - How your proposed project builds upon or otherwise relates to that work.
 
 
-Alex worked on 1)  2) :
+Alex worked on 1) resetting up the Nvidia Jetson Nano with our new 128 GB SD card 2) :
 
 
 
-Navya worked on 1) making sure s3prl libraries in conjunction with the wrapper from Resymblyzer and 2):
+Navya worked on 1) testing the baseline diarization accuracy for Resymblyzer and 2):
 
 
 
-Bassam worked on 1) a third party implementation of UIS-RNN speaker diarization model ran locally and ran on-device and 2):
+Bassam worked on 1) baseline diarization accuracy for  the benchmarking script that Navya wrote and 2) getting the baseline diarization error rates for the following models:
 
 
 
@@ -31,7 +31,9 @@ Bassam worked on 1) a third party implementation of UIS-RNN speaker diarization 
 ----
 1. What are the baselines that you will be running for your approach? Please be specific: data, splits, models and model variants, any other relevant information.
 
-We used wav2vec, wav2vec 2.0, modified_cpc, vq_wav2vec, Resemblyzer. Resemblyzer is another library for speech diarization that we plan to use instead of wav2vec_xlsr since xlsr is prohibitively large to run on-device. Resemblyzer is also useful because it is a text independent speaker indentification module.
+We used wav2vec, wav2vec 2.0, modified_cpc, vq_wav2vec, Resemblyzer.
+
+All of our models are pretrained. For testing, however, we are using the 
 
 Diarization error rate, 
 
@@ -43,13 +45,17 @@ Diarization error rate,
 
 3. How will you be evaluating your baselines?
 
+We are evaluating our baselines using the diarization error rate. This is a measure of how w
 
 
 4. Implement and run the baselines. Document any challenges you run into here, and how you solve them or plan to solve 
 them.
 
 
+
+
 5. If you finish running and evaluating your baselines, did the results align with your hypotheses? Are there any changes or focusing that you can do for your project based on insights from these results?
+
 
 
 3: Extra

@@ -9,6 +9,8 @@ from scipy.spatial.distance import cdist
 import argparse
 import numpy as np
 from torchaudio.transforms import Resample
+from timeit import default_timer as timer
+
 
 from sklearn.cluster import KMeans
 import simpleder
@@ -79,23 +81,27 @@ if __name__ == "__main__":
         if wav.shape[0] <= 2:
             wav = wav[0]
 
+        start = timer()
         # Creates the embeddings
         with torch.no_grad():
             print(wav.shape)
-
             if args.model_name in models:
                 # Create embedding with one of the s3prl models
                 embeddings = model(wav)
             else:
                 # Create embedding with Resemblyzer
                 embeddings = model([wav])['hidden_states']
-
+        embed_end = timer()
 
         embeddings = torch.cat([e[0] for e in embeddings])
         embeddings = embeddings.numpy()
         print("Shape of embeddings is", embeddings.shape)
 
         clusters = KMeans(4).fit(embeddings)
+        cluster_end = timer()
+
+
+
         labels_preds = clusters.labels_
         labels_preds= postprocess_pred_labels(labels_preds)
         error = simpleder.DER(gold_labels, labels_preds)
@@ -112,11 +118,13 @@ if __name__ == "__main__":
         sum += val
     avg_der= sum/len(der_dict)
     der_dict["total_avg_der"]= avg_der
+    der_dict["inference_time"] = embed_end - start
+    der_dict["diarization_time"] = cluster_end - start
 
     f = open("results/"+args.model_name+"_der.csv","w")
     w = csv.writer(f)
     w.writerows(der_dict.items())
     w.close()
-    print("AVG DER={:.3f}".format(avg_der))
+    print("AVG DER={:.3f}, Embedding Time={:.3f}, Clustering Time={.3f}".format(avg_der, embed_end-start, cluster_end))
 
  
