@@ -53,6 +53,8 @@ if __name__ == "__main__":
     # Load the resemblyzer model
     # TODO
 
+    print('Model Loaded')
+
     # load wav
     #wav, freq = torchaudio.load("bdb001interaction_qAd8wbQp.wav")
 
@@ -84,6 +86,7 @@ if __name__ == "__main__":
         start = timer()
         # Creates the embeddings
         with torch.no_grad():
+            print('Creating embedding')
             print(wav.shape)
             if args.model_name in models:
                 # Create embedding with one of the s3prl models
@@ -101,7 +104,7 @@ if __name__ == "__main__":
         cluster_end = timer()
 
 
-
+        print('Running clustering')
         labels_preds = clusters.labels_
         labels_preds= postprocess_pred_labels(labels_preds)
         error = simpleder.DER(gold_labels, labels_preds)
@@ -121,6 +124,7 @@ if __name__ == "__main__":
     der_dict["inference_time"] = embed_end - start
     der_dict["diarization_time"] = cluster_end - start
 
+    print('Writing results to file')
     f = open("results/"+args.model_name+"_der.csv","w")
     w = csv.writer(f)
     w.writerows(der_dict.items())
