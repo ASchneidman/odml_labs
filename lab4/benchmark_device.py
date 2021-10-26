@@ -43,11 +43,12 @@ if __name__ == "__main__":
         'hubert'
     ]
 
+    device = 'cuda' # or cpu
 
     if args.model_name in models:
         old_load = torch.load
         modified_load(old_load)
-        model = getattr(hub, args.model_name)()
+        model = getattr(hub, args.model_name)().to(device)
         model.eval()
     
     # Load the resemblyzer model
