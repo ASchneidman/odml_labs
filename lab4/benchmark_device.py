@@ -29,9 +29,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     # name of files 
-    #parser.add_argument("input_wav", type=str, default="bdb001interaction_qAd8wbQp.wav")
     parser.add_argument("--model_name", type=str)
-    #parser.add_argument("--downstream_weights", type=str)
     args = parser.parse_args()
 
     models = [
@@ -43,7 +41,8 @@ if __name__ == "__main__":
         'hubert'
     ]
 
-    device = 'cuda' # or cpu
+    #device = 'cuda' # or cpu
+    device = 'cpu'
 
     if args.model_name in models:
         old_load = torch.load
@@ -59,7 +58,7 @@ if __name__ == "__main__":
     # load wav
     #wav, freq = torchaudio.load("bdb001interaction_qAd8wbQp.wav")
 
-    audio_path= "vox_converse_data"
+    audio_path= "../../vox_converse_data"
     files = os.listdir(audio_path+"/audio")
     der_dict={}
     file_count=0
@@ -91,7 +90,7 @@ if __name__ == "__main__":
             print(wav.shape)
             if args.model_name in models:
                 # Create embedding with one of the s3prl models
-                embeddings = model(wav)
+                embeddings = model([wav])['hidden_states']
             else:
                 # Create embedding with Resemblyzer
                 embeddings = model([wav])['hidden_states']
@@ -108,7 +107,11 @@ if __name__ == "__main__":
         print('Running clustering')
         labels_preds = clusters.labels_
         labels_preds= postprocess_pred_labels(labels_preds)
-        error = simpleder.DER(gold_labels, labels_preds)
+        try:
+            error = simpleder.DER(gold_labels, labels_preds)
+        except ValueError:
+            # skip this one
+            continue
         print("file : {} DER={:.3f}".format(basefile_name,error))
         #plt.scatter(np.arange(embeddings.shape[0]), clusters.labels_)
         #plt.show()
