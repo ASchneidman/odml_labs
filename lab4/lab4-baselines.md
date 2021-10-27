@@ -15,15 +15,12 @@ Group members present in lab today: Alex, Navya, Bassam
     - How your proposed project builds upon or otherwise relates to that work.
 
 
-Alex worked on 1) resetting up the Nvidia Jetson Nano with our new 128 GB SD card 2) :
 
+Another potential solution to the speaker diarization problem or "who spoke when" was introduced in 2019 in a joint effort betweent Google and Colombia University in their paper, Fully Supervised Speaker Diarization. In the paper, the authors introduce unbounded interleaved-state recurrent neural networks (UIS-RNN). The RNN accepts speaker-discriminative embeddings (a.k.a. d-vectors) from input utterances and each individual
+speaker is modeled by a parameter-sharing RNN.
 
+This RNN is naturally integrated with a distance-dependent Chinese restaurant process (ddCRP) to accommodate an unknown number of speakers. Our system is fully supervised and is able to learn from examples where time-stamped speaker labels are annotated. We achieved a 7.6% diarization error rate on NIST SRE 2000 CALLHOME, which is better than the state-of-the-art method using spectral clustering. Moreover, our method decodes in an online fashion while most state-of-the-art systems rely on offline clustering.
 
-Navya worked on 1) testing the baseline diarization accuracy for Resymblyzer and 2):
-
-
-
-Bassam worked on 1) baseline diarization accuracy for  the benchmarking script that Navya wrote and 2) getting the baseline diarization error rates for the following models:
 
 
 
