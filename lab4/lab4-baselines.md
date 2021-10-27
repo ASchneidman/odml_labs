@@ -31,27 +31,28 @@ Bassam worked on 1) baseline diarization accuracy for  the benchmarking script t
 ----
 1. What are the baselines that you will be running for your approach? Please be specific: data, splits, models and model variants, any other relevant information.
 
-We used wav2vec, wav2vec 2.0, modified_cpc, vq_wav2vec, Resemblyzer.
+We attempted to use wav2vec, wav2vec 2.0, modified_cpc, vq_wav2vec, wav2vec_xlsr, and Resemblyzer.
 
-All of our models are pretrained. For testing, however, we are using the 
+All of the models are pretrained. For testing, however, we are using the VOX Converse Dataset. It contains 10 wav files of snippets from various news broadcasts. In each file, there are at most 4 unique speakers.
 
-Diarization error rate, 
-
-
+We load each of the models and then pass a downsampled version of the wav files into the model for embedding. We downsample each traditional 44 KHz wav file into having approximately 1 KHz sample rate. Without the downsampling, embedding the models took well over an hour each time.
 
 2. These baselines should be able to run on your device within a reasonable amount of time. If you haven't yet tried to run them, please include a back-of-the-envelope calculation of why you think they will fit in memory. If the baselines will not fit in memory, return to (1) and adjust accordingly.
 
 
 
+
 3. How will you be evaluating your baselines?
 
-We are evaluating our baselines using the diarization error rate. This is a measure of how w
+We are evaluating our baselines using the diarization error rate. Since speaker diarization attempts to segment an input audio stream by speaker identity, the DER is a measure as the fraction of time that is not attributed correctly to a speaker or to non-speech.
+
+In other words, given an input audio signal, our networks can create 256-element vector embeddings for each 10 ms stride. Once the audio is converted into a list of embeddings, we attempt to find 4 clusters in the embeddings using scikit-learns K-Means clustering algorithm. We assign each vector one of the cluster categories and then compute the diarization error rate. 
 
 
-4. Implement and run the baselines. Document any challenges you run into here, and how you solve them or plan to solve 
-them.
 
+4. Implement and run the baselines. Document any challenges you run into here, and how you solve them or plan to solve them.
 
+Major difficulties included downloading and setting up s3prl library on-device. Despite it's promise of being a unified front-end framework that provides access to several audio embedding networks, s3prl is very poorly optimized for non-Intel systems as we discovered in the previous lab. 
 
 
 5. If you finish running and evaluating your baselines, did the results align with your hypotheses? Are there any changes or focusing that you can do for your project based on insights from these results?
