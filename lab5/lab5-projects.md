@@ -6,6 +6,8 @@ Group name:
 ---
 Group members present in lab today:
 
+Alex, Navya, Bassam
+
 1: Plan
 ----
 1. What is your plan for today, and this week? 
@@ -14,8 +16,11 @@ Group members present in lab today:
 2: Execution
 ----
 1. What have you achieved today / this week? Was this more than you had planned to get done? If so, what do you think worked well?
-2. Was there anything you had hoped to achieve, but did not? What happened? How did you work to resolve these challenges?
-3. What were the contributions of each group member towards all of the above?
+
+This week we completed benchmarks for on device speaker diarization. Getting the pipeline to run worked reasonably well, although our diarization error rate leaves much to be desired. 
+
+3. Was there anything you had hoped to achieve, but did not? What happened? How did you work to resolve these challenges?
+4. What were the contributions of each group member towards all of the above?
 
 3: Next steps
 ----
