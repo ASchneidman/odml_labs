@@ -17,9 +17,16 @@ Alex, Navya, Bassam
 ----
 1. What have you achieved today / this week? Was this more than you had planned to get done? If so, what do you think worked well?
 
-This week we completed benchmarks for on device speaker diarization. Getting the pipeline to run worked reasonably well, although our diarization error rate leaves much to be desired. 
+This week we completed benchmarks for on device speaker diarization. Getting the pipeline to run worked reasonably well, although our diarization error rate leaves much to be desired. We worked on improving the diarization error rate and have debugged 
+
+Examine potential extensions to ensure speaker privacy:
+-Cancelable Biometrics
+
+
 
 3. Was there anything you had hoped to achieve, but did not? What happened? How did you work to resolve these challenges?
+
+
 4. What were the contributions of each group member towards all of the above?
 
 3: Next steps
