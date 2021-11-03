@@ -11,7 +11,12 @@ Alex, Navya, Bassam
 1: Plan
 ----
 1. What is your plan for today, and this week? 
-2. How will each group member contribute towards this plan?
+
+Based on our results from the last lab (baselines), and feedback from the proposal, we've decided to pivot our project to focus on analyzing the impact of privacy-preserving techniques on Rezemblyzer, a diarization package we were able to run on device. 
+
+3. How will each group member contribute towards this plan?
+
+We plan on having each group member examine a different privacy-preserving technique (i.e. cancelable biometrics). 
 
 2: Execution
 ----
