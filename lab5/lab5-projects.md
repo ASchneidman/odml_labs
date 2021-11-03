@@ -16,26 +16,39 @@ Based on our results from the last lab (baselines), and feedback from the propos
 
 3. How will each group member contribute towards this plan?
 
-We plan on having each group member examine a different privacy-preserving technique (i.e. cancelable biometrics). 
+We plan on having each group member examine a different privacy-preserving technique. These will include cancelable biometrics (using per-user auxiliary data to generate transformations which can be revoked in the case of a leak) and crpytographic approaches (for example using a single hashing function on both the template and the queries). 
 
 2: Execution
 ----
 1. What have you achieved today / this week? Was this more than you had planned to get done? If so, what do you think worked well?
 
-This week we completed benchmarks for on device speaker diarization. Getting the pipeline to run worked reasonably well, although our diarization error rate leaves much to be desired. We worked on improving the diarization error rate and have debugged 
+This week we completed benchmarks for on device speaker diarization which included experimenting with 6 different backends for generating speech embeddings. Getting the pipeline to run worked reasonably well, although our diarization error rate leaves much to be desired. We worked on improving the diarization error rate and have debugged a number of key memory issues to get our pipeline up and running. 
 
-Examine potential extensions to ensure speaker privacy:
--Cancelable Biometrics
+We've decided to pivot to experimenting with privacy-preserving techniques applicable to on device speaker diarization. We want to explore this route since it will provide a more novel angle to the project rather than just looking at performance tradeoffs between running these models on device. The novel aspect here will be looking at the performance impacts brought on by these different privacy-preserving approaches, since they will require additional memory for storing transformations or other hashes. 
 
 
 
 3. Was there anything you had hoped to achieve, but did not? What happened? How did you work to resolve these challenges?
 
+We hoped to see some better diarization performance from our baselines. Many of the backend models were not finetuned for diarization which likely caused some lack of quality in their embeddings. We saw some better performance by tweaking our clustering algorithms to better align the audio to the embeddings. 
+
 
 4. What were the contributions of each group member towards all of the above?
+
+
 
 3: Next steps
 ----
 1. Are you making sufficient progress towards completing your final project? Explain why or why not. If not, please report how you plan to change the scope and/or focus of your project accordingly.
-2. Based on your work today / this week, and your answer to (1), what are your group's planned next steps?
-3. How will each group member contribute towards those steps? 
+
+As mentioned above, we plan on pivoting to exploring privacy-preserving techniques in the diarization domain. This will add some novelty to the project with clear and easily comparable performance data. 
+
+TODO: EXPAND ON THIS.
+
+3. Based on your work today / this week, and your answer to (1), what are your group's planned next steps?
+
+We plan on exploring three different techniques. Each of these three will be divided up between each group member. We also plan on continuing to explore the literature to find other applicable techniques. 
+
+TODO: EXPAND ON THIS.
+
+5. How will each group member contribute towards those steps? 
