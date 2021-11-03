@@ -16,7 +16,7 @@ Based on our results from the last lab (baselines), and feedback from the propos
 
 3. How will each group member contribute towards this plan?
 
-We plan on having each group member examine a different privacy-preserving technique. These will include cancelable biometrics (using per-user auxiliary data to generate transformations which can be revoked in the case of a leak) and crpytographic approaches (for example using a single hashing function on both the template and the queries). 
+We plan on having each group member examine a different privacy-preserving technique. These will include cancelable biometrics (using per-user auxiliary data to generate transformations which can be revoked in the case of a leak) and cryptographic approaches (for example using a single hashing function on both the template and the queries), among others.
 
 2: Execution
 ----
@@ -41,14 +41,20 @@ We hoped to see some better diarization performance from our baselines. Many of 
 ----
 1. Are you making sufficient progress towards completing your final project? Explain why or why not. If not, please report how you plan to change the scope and/or focus of your project accordingly.
 
-As mentioned above, we plan on pivoting to exploring privacy-preserving techniques in the diarization domain. This will add some novelty to the project with clear and easily comparable performance data. 
-
-TODO: EXPAND ON THIS.
+As mentioned above, we plan on pivoting to exploring privacy-preserving techniques in the diarization domain. This will add some novelty to the project with clear and easily comparable performance data. The overall goal of these approaches will be to protect the integrity of the system in the case of the user voice embedding templates (which are saved to disk) becoming leaked. For example, if someone is able to copy one of the stored templates, they would not be able to use that template to fool the system. 
 
 3. Based on your work today / this week, and your answer to (1), what are your group's planned next steps?
 
 We plan on exploring three different techniques. Each of these three will be divided up between each group member. We also plan on continuing to explore the literature to find other applicable techniques. 
 
-TODO: EXPAND ON THIS.
+We have three proposed techniques:
+
+a. Cryptographic methods. This will entail using some hashing function to hash the query and template embeddings, and only store the hashed versions of the template embeddings.
+
+b. User-Specific Random Projections. This will entail using a different random projection matrix for each user (with some additional properties) on the query and template embeddings. In the event a template becomes compromised, a new random projection matrix can be generated. See Teoh et al.
+
+c. Sorted Index Number in combination with random projections. This approach creates a non-invertible transformation of feature vectors to vectors of indices which can then be used to compare against a dataset of templates. See Sorted Index Numbers for Privacy Preserving Face Recognition (Wang et al.). 
 
 5. How will each group member contribute towards those steps? 
+
+Navya will explore cryptographic methods, Bassam will explore user specific random projections, and Alex will explore Sorted Index Numbers in combination with random projections. 
