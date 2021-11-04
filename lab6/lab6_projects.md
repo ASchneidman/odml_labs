@@ -4,12 +4,17 @@ The goal of this lab is for you to make progess on your project, together as a g
 
 Group name:
 ---
-Group members present in lab today:
+Group members present in lab today: Alex, Bassam, Navya
 
 1: Plan
 ----
 1. What is your plan for today, and this week? 
-2. How will each group member contribute towards this plan?
+
+We plan on starting some of the implementations of the privacy preserving techniques specified in the last lab.
+
+3. How will each group member contribute towards this plan?
+
+Bassam began implemented the random projection technique. Alex began working on real time diarization with Rezemblyzer. Navya worked on the implementation of some diarization extensions (multiple speakers in one segment). 
 
 2: Execution
 ----
