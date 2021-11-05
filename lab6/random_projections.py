@@ -18,7 +18,7 @@ class Enrolled():
         self.y = y
 
 def query(query_vector, enrollment):
-    
+
     dist = np.inf
     lowest_e = enrollment[0]
     # Examine every enrolled person
@@ -30,7 +30,7 @@ def query(query_vector, enrollment):
 
         # Compare the distance of the current person audio to the projected query vector
         computed_dist = hamming(e.y, pred)
-        if computed_dist < dist
+        if computed_dist < dist:
             # Update the lowest dist
             dist = computed_dist
             lowest_e = e
@@ -64,7 +64,8 @@ pin = 'test'
 feature = random.uniform(low=0.0, high=1.0, size=(256,512))
 enrollment = []
 enroll(pin, feature, enrollment)
-query()
+
+query(feature, enrollment)
 
 """
 1) Each user inputs a pin/password and a feature vector, N. We compute a hash of the pin/password then use the hash as a seed to
