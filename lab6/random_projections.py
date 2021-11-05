@@ -9,7 +9,7 @@ import numpy.random as random
 import hashlib
 from scipy.spatial.distance import hamming
 
-class Enrolled():
+class Enrolled:
     def __init__(self, name, pin_hash, pin_hash_i, R, y):
         self.name = name
         self.pin_hash = pin_hash
@@ -39,7 +39,7 @@ def query(query_vector, enrollment):
     return lowest_e
 
 
-def enroll(pin, feature_vector, enrollment):
+def enroll(name, pin, feature_vector, enrollment):
 
     # Create a hash of the user's pin and convert it to an integer
     h = hashlib.sha256(pin.encode('utf-8'))
@@ -56,16 +56,23 @@ def enroll(pin, feature_vector, enrollment):
     y = Q.T @ feature_vector
     y = np.where(y<0, 0, 1).flatten()
 
-    enrollment.append(Enrolled('test', h, m, Q, y))
+    enrollment.append(Enrolled(name, h, m, Q, y))
     return
 
+name1 = 'Tom'
+pin1 = 'test1'
+feature1 = random.uniform(low=0.0, high=1.0, size=(256,512))
 
-pin = 'test'
-feature = random.uniform(low=0.0, high=1.0, size=(256,512))
+name2 = 'John'
+pin2 = 'test2'
+feature2 = random.uniform(low=0.0, high=1.0, size=(256,512))
+
 enrollment = []
-enroll(pin, feature, enrollment)
+enroll(name1, pin1, feature1, enrollment)
+enroll(name2, pin2, feature2, enrollment)
 
-query(feature, enrollment)
+e = query(feature2, enrollment)
+print(e.name)
 
 """
 1) Each user inputs a pin/password and a feature vector, N. We compute a hash of the pin/password then use the hash as a seed to
