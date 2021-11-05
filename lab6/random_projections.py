@@ -1,6 +1,14 @@
 """
 @author: Bassam Bikdash
 
+1) Each user inputs a pin/password and a feature vector, N. We compute a hash of the pin/password then use the hash as a seed to
+to generate a random matrix R, NxN for each user. pin/password -> R
+2) We apply R to each users feature vector to get the binary vector mentioned here: http://www.scholarpedia.org/article/Cancelable_biometrics
+3) Then we store a file with each user's hash and R, transformed feature vector which will serve as enrollment
+
+dict = { hash1: R1, binary_vector1
+         hash2: R2, binary_vector2,
+         hash3: R3, binary_vector3}
 
 """
 
@@ -73,14 +81,3 @@ enroll(name2, pin2, feature2, enrollment)
 
 e = query(feature2, enrollment)
 print(e.name)
-
-"""
-1) Each user inputs a pin/password and a feature vector, N. We compute a hash of the pin/password then use the hash as a seed to
-to generate a random matrix R, NxN for each user. pin/password -> R
-2) We apply R to each users feature vector to get the binary vector mentioned here: http://www.scholarpedia.org/article/Cancelable_biometrics
-3) Then we store a file with each user's hash and R, transformed feature vector which will serve as enrollment
-
-dict = { hash1: R1, binary_vector1
-         hash2: R2, binary_vector2,
-         hash3: R3, binary_vector3}
-"""
