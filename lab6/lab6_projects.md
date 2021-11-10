@@ -53,8 +53,14 @@ Bassam implemented the function necessary for biometric salting. Alex integrated
 ----
 1. Are you making sufficient progress towards completing your final project? Explain why or why not. If not, please report how you plan to change the scope and/or focus of your project accordingly.
 
+We are making sufficient progress towards completing the final project according to the plan laid out next week.
+
 
 2. Based on your work today / this week, and your answer to (1), what are your group's planned next steps?
 
+We first have our meeting with the course staff to evaluate our progress. Pending results from that meeting, we will implement two more privacy preserving methods. We will then evaluate how these methods affect performance across a number of metrics (including DER impact, inference time, power consumption, and more). 
+
 
 3. How will each group member contribute towards those steps? 
+
+Alex and Navya will implement the remaining two methods. Following this, the group as a whole will begin evaluation. 
