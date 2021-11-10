@@ -6,9 +6,6 @@ to generate a random matrix R, NxN for each user. pin/password -> R
 2) We apply R to each users feature vector to get the binary vector mentioned here: http://www.scholarpedia.org/article/Cancelable_biometrics
 3) Then we store a file with each user's hash and R, transformed feature vector which will serve as enrollment
 
-dict = { hash1: R1, binary_vector1
-         hash2: R2, binary_vector2,
-         hash3: R3, binary_vector3}
 
 """
 
@@ -78,6 +75,8 @@ feature2 = random.uniform(low=0.0, high=1.0, size=(256,512))
 enrollment = []
 enroll(name1, pin1, feature1, enrollment)
 enroll(name2, pin2, feature2, enrollment)
+
+assert(len(enrollment) == 2)
 
 e = query(feature2, enrollment)
 print(e.name)
