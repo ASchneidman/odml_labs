@@ -36,10 +36,18 @@ N/A
 
 5. What were the contributions of each group member towards all of the above?
 
-
+All group members met with the course staff to discuss the above. 
 
 3: Next steps
 ----
 1. Are you making sufficient progress towards completing your final project? Explain why or why not. If not, please report how you plan to change the scope and/or focus of your project accordingly.
-2. Based on your work today / this week, and your answer to (1), what are your group's planned next steps?
-3. How will each group member contribute towards those steps? 
+
+We are making sufficient progress towards completing the project. We've already implemented random projections, determined how we will compare performance, and added random projections to the Rezemblyzer pipeline. 
+
+3. Based on your work today / this week, and your answer to (1), what are your group's planned next steps?
+
+Our next steps are exploring the impact of different hashing functions and different bit widths. We will also start implementing bnechmarking code for testing different parameters (bit widths, projection sizes, sampling frequency, etc).
+
+5. How will each group member contribute towards those steps? 
+
+Alex will work on integrating these new methods into the pipleine, Bassam will work on looking at different sizes of hash functions, Navya will work on benchmarking code.
