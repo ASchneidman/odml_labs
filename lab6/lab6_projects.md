@@ -22,9 +22,9 @@ Bassam began implement one of the methods of cancelable biometrics for encryptin
 
 Bassam implemented the biometric salting described at this link: http://www.scholarpedia.org/article/Cancelable_biometrics. Biometric salting is similar to password salting in cryptography, where a set of random bits r are concatenated to a secret key, k, associated with each user. The output is often stored as hash H(r+k) in the database. Biometric salting follows the same principle such that a user-specific and independent input factor (auxiliary data such as a password or user-specific random numbers) is blended with biometric data to derive a distorted version of the biometric template. Since the auxiliary data is externally derived and interacts directly with biometric data, it can be changed and revoked easily but must be kept secret for maximum security protection. However, since the external confidential keys or passwords are easily to be lost, stolen or compromised, the accuracy and vulnerabilities of existing schemes should be justified.
 
-We implemented a specific instance of biometrics salting based on user specific random projection. Basically, we generate a random projection matrix from some auxiliary data, for example a user pin or password. Gram-Schmidt orthonormalization is then carried out on the on the matrix such that the matrix columns are orthonormal.
+We implemented a specific instance of biometric salting based on user specific random projection. Basically, we generate a random projection matrix from some auxiliary data, for example a user pin or password. Gram-Schmidt orthonormalization is then carried out on the on the matrix such that the matrix columns are orthonormal.
 
-We then project a feature vector, x, by premultiplying the random projection matrix R, to retrieve a projected feature vector, y. y is then thresholded converted to a binary vector such that b_i=0 if y_i< Tau, otherwise b_i=1.
+We then project a feature vector, x, by premultiplying the random projection matrix R, to retrieve a projected feature vector, y. y is then thresholded converted to a binary vector such that b_i=0 if y_i < Tau, otherwise b_i=1.
 
 Here is an explanation of how we use this biometric salting in our project. Speaker diarization consists of two parts: speaker enrollment and speaker verification. During speaker enrollment, we store a voice print (aka. a neural network embedding of a recording of a person’s voice) of a person and use it as a template to compare future feature embedding to at runtime. If we store a person’s voice or it’s embedding in a raw form, this is not very secure.
 
@@ -46,7 +46,7 @@ No. These were the main goals of this particular lab of the project. Now, we are
 
 3. What were the contributions of each group member towards all of the above?
 
-Bassam implemented the function necessary for biometric salting. Alex integrated those functions in the primary speaker diarization pipeline. Navya
+Bassam implemented the function necessary for biometric salting. Alex integrated those functions in the primary speaker diarization pipeline. Navya did some research on other privacy preserving mthods and what metrics we can use to evaluate our model.
 
 
 3: Next steps
