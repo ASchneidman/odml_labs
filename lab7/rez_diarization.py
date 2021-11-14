@@ -26,7 +26,6 @@ speaker_embeds = [encoder.embed_utterance(speaker_wav) for speaker_wav in speake
 
 
 # enroll users
-#speaker_passwords = [str(np.random.rand(1)[0].tolist()) for _ in range(len(speaker_wavs))]
 speaker_passwords = speaker_names
 print(f"Passwords: {speaker_passwords}")
 
@@ -38,6 +37,7 @@ for i in range(len(speaker_passwords)):
 
 
 # Test that the templates match in the secure space
+print("Test that the templates match in the secure space")
 for name, speaker_embed in zip(speaker_names, speaker_embeds):
     print(f"Actual: {name}, Pred: {query(speaker_embed, enrollments).name}")
 
@@ -88,8 +88,8 @@ accuracy /= len(predicted_speakers_not_secure)
 
 print(f"Accuracy: {accuracy}")
 
-predicted_speakers_not_secure = [s + '\n' for s in predicted_speakers_not_secure]
-predicted_speakers_secure = [s + '\n' for s in predicted_speakers_secure]
+predicted_speakers_not_secure = [s + f", {split.start / sampling_rate, split.stop / sampling_rate}" + '\n' for s, split in zip(predicted_speakers_not_secure, wav_splits)]
+predicted_speakers_secure = [s + f", {split.start / sampling_rate, split.stop / sampling_rate}" + '\n' for s, split in zip(predicted_speakers_secure, wav_splits)]
 
 with open('secure_names_output.txt', 'w') as f:
     f.writelines(predicted_speakers_secure)
