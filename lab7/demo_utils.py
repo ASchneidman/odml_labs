@@ -35,6 +35,8 @@ _my_colors = np.array([
 
 
 def play_wav(wav, blocking=True):
+    if playsound is None:
+        raise RuntimeError("playsound is not installed. Install playsound with pip install playsound . If on mac, also install pyobjc with pip3 install PyObjC .") 
     playsound(wav, block=blocking)
     """
     try:
