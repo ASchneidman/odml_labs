@@ -9,6 +9,12 @@ from sys import stderr
 import matplotlib.pyplot as plt
 import numpy as np
 
+try:
+    from playsound import playsound
+except:
+    playsound = None
+    print("Failed to import playsound")
+
 _default_colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
 _my_colors = np.array([
     [0, 127, 70],
@@ -29,6 +35,8 @@ _my_colors = np.array([
 
 
 def play_wav(wav, blocking=True):
+    playsound(wav, block=blocking)
+    """
     try:
         import sounddevice as sd
         # Small bug with sounddevice.play: the audio is cut 0.5 second too early. We pad it to 
@@ -37,6 +45,7 @@ def play_wav(wav, blocking=True):
         sd.play(wav, sampling_rate, blocking=blocking)
     except Exception as e:
         print("Failed to play audio: %s" % repr(e))
+    """
 
 
 def plot_similarity_matrix(matrix, labels_a=None, labels_b=None, ax: plt.Axes=None, title=""):
@@ -191,7 +200,7 @@ def interactive_diarization(similarity_dict, wav, wav_splits, x_crop=5, show_tim
 
     ani = FuncAnimation(fig, update, frames=len(wav_splits), init_func=init, blit=not show_time,
                         repeat=False, interval=1)
-    #play_wav(wav, blocking=False)
+    play_wav(wav, blocking=False)
     plt.show()
 
 

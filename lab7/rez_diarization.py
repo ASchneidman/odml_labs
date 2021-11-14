@@ -103,4 +103,4 @@ similarity_dict = {name: cont_embeds @ speaker_embed for name, speaker_embed in
 
 
 ## Run the interactive demo
-#interactive_diarization(similarity_dict, wav, wav_splits, show_time=True)
+interactive_diarization(similarity_dict, wav_fpath, wav_splits, show_time=True)
