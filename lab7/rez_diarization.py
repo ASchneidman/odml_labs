@@ -53,25 +53,24 @@ for name, speaker_embed in zip(speaker_names, speaker_embeds):
 
 print("Running the continuous embedding on cpu, this might take a while...")
 
-wav = wav[:25 * sampling_rate]
-
 _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True, rate=16)
 
 predicted_speakers_secure = []
 predicted_speakers_not_secure = []
 # Query each feature vector
 for embedding, split in zip(cont_embeds, wav_splits):
-    print(f"Audio Segment: {split.start / sampling_rate, split.stop / sampling_rate}")
+    #print(f"Audio Segment: {split.start / sampling_rate, split.stop / sampling_rate}")
     lowest_e = query(embedding, enrollments)
     predicted_speakers_secure.append(lowest_e.name)
 
-    best_sim = float("inf")
+    best_sim = float("-inf")
     best_name = None
     for name, speaker_embed in zip(speaker_names, speaker_embeds):
         sim = embedding @ speaker_embed
         
-        print(f"Non-Secure: Name {name}, Dist: {sim}")
-        if sim < best_sim:
+        #print(f"Non-Secure: Name {name}, Dist: {sim}")
+        if sim > best_sim:
+            # Note, best similarity here is the LARGEST, not smallest
             best_sim = sim
             best_name = name
 

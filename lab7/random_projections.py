@@ -36,8 +36,6 @@ def query(query_vector, enrollment):
         # Compare the distance of the current person audio to the projected query vector
         computed_dist = hamming(e.y, pred)
 
-        print(f"Secure: Name {e.name}, Dist: {computed_dist}")
-
         if computed_dist < dist:
             # Update the lowest dist
             dist = computed_dist
