@@ -116,8 +116,9 @@ def plot_projections(embeds, speakers, ax=None, colors=None, markers=None, legen
     
     return projs
     
-
 def interactive_diarization(similarity_dict, wav, wav_splits, x_crop=5, show_time=False):
+    anim_running = True
+
     fig, ax = plt.subplots()
     lines = [ax.plot([], [], label=name)[0] for name in similarity_dict.keys()]
     text = ax.text(0, 0, "", fontsize=10)
@@ -177,9 +178,20 @@ def interactive_diarization(similarity_dict, wav, wav_splits, x_crop=5, show_tim
             print("Animation is delayed further than 200ms!", file=stderr)
         return lines + [text]
     
+    def onClick(event):
+        nonlocal anim_running
+        if anim_running:
+            ani.event_source.stop()
+            anim_running = False
+        else:
+            ani.event_source.start()
+            anim_running = True
+
+    fig.canvas.mpl_connect('button_press_event', onClick)
+
     ani = FuncAnimation(fig, update, frames=len(wav_splits), init_func=init, blit=not show_time,
                         repeat=False, interval=1)
-    play_wav(wav, blocking=False)
+    #play_wav(wav, blocking=False)
     plt.show()
 
 

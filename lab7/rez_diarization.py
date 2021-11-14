@@ -13,7 +13,7 @@ from random_projections import enroll, query
 ## Get reference audios
 # Load the interview audio from disk
 # Source for the interview: https://www.youtube.com/watch?v=X2zqiX6yL3I
-wav_fpath = "X2zqiX6yL3I.mp3"
+wav_fpath = "uef39_3.mp4"
 wav = preprocess_wav(wav_fpath)
 
 # Cut some segments from single speakers as reference audio
@@ -26,7 +26,8 @@ speaker_embeds = [encoder.embed_utterance(speaker_wav) for speaker_wav in speake
 
 
 # enroll users
-speaker_passwords = [str(np.random.rand(1)[0].tolist()) for _ in range(len(speaker_wavs))]
+#speaker_passwords = [str(np.random.rand(1)[0].tolist()) for _ in range(len(speaker_wavs))]
+speaker_passwords = speaker_names
 print(f"Passwords: {speaker_passwords}")
 
 enrollments = []
@@ -52,15 +53,15 @@ for name, speaker_embed in zip(speaker_names, speaker_embeds):
 
 print("Running the continuous embedding on cpu, this might take a while...")
 
-wav = wav[:100]
+wav = wav[:25 * sampling_rate]
 
 _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True, rate=16)
-
 
 predicted_speakers_secure = []
 predicted_speakers_not_secure = []
 # Query each feature vector
-for embedding in cont_embeds:
+for embedding, split in zip(cont_embeds, wav_splits):
+    print(f"Audio Segment: {split.start / sampling_rate, split.stop / sampling_rate}")
     lowest_e = query(embedding, enrollments)
     predicted_speakers_secure.append(lowest_e.name)
 
@@ -76,6 +77,8 @@ for embedding in cont_embeds:
 
 
     predicted_speakers_not_secure.append(best_name)
+
+    #print("\n")
 
 accuracy = 0.0
 # compute accuracy relative to non secure version
@@ -96,9 +99,9 @@ with open('not_secure_names_output.txt', 'w') as f:
 
 # Get the continuous similarity for every speaker. It amounts to a dot product between the 
 # embedding of the speaker and the continuous embedding of the interview
-#similarity_dict = {name: cont_embeds @ speaker_embed for name, speaker_embed in 
-#                   zip(speaker_names, speaker_embeds)}
+similarity_dict = {name: cont_embeds @ speaker_embed for name, speaker_embed in 
+                   zip(speaker_names, speaker_embeds)}
 
 
 ## Run the interactive demo
-#interactive_diarization(similarity_dict, wav, wav_splits)
+#interactive_diarization(similarity_dict, wav, wav_splits, show_time=True)
