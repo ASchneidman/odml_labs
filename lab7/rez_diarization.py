@@ -3,6 +3,7 @@ from demo_utils import *
 from pathlib import Path
 import numpy as np
 from random_projections import enroll, query
+from timeit import default_timer as timer
 
 
 
@@ -25,7 +26,7 @@ encoder = VoiceEncoder("cpu")
 speaker_embeds = [encoder.embed_utterance(speaker_wav) for speaker_wav in speaker_wavs]
 
 
-# enroll users
+# Enroll users
 speaker_passwords = speaker_names
 print(f"Passwords: {speaker_passwords}")
 
@@ -54,14 +55,11 @@ for name, speaker_embed in zip(speaker_names, speaker_embeds):
 print("Running the continuous embedding on cpu, this might take a while...")
 
 _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True, rate=16)
-
-predicted_speakers_secure = []
+# Query feature vector non-securely
+non_secure_q_start = timer()
 predicted_speakers_not_secure = []
-# Query each feature vector
 for embedding, split in zip(cont_embeds, wav_splits):
     #print(f"Audio Segment: {split.start / sampling_rate, split.stop / sampling_rate}")
-    lowest_e = query(embedding, enrollments)
-    predicted_speakers_secure.append(lowest_e.name)
 
     best_sim = float("-inf")
     best_name = None
@@ -74,10 +72,21 @@ for embedding, split in zip(cont_embeds, wav_splits):
             best_sim = sim
             best_name = name
 
-
     predicted_speakers_not_secure.append(best_name)
+non_secure_q_end = timer()
 
-    #print("\n")
+
+# Query each feature vector securely
+secure_q_start = timer()
+predicted_speakers_secure = []
+for embedding, split in zip(cont_embeds, wav_splits):
+    #print(f"Audio Segment: {split.start / sampling_rate, split.stop / sampling_rate}")
+    lowest_e = query(embedding, enrollments)
+    predicted_speakers_secure.append(lowest_e.name)
+secure_q_end = timer()
+
+
+
 
 accuracy = 0.0
 # compute accuracy relative to non secure version
@@ -102,5 +111,28 @@ similarity_dict = {name: cont_embeds @ speaker_embed for name, speaker_embed in
                    zip(speaker_names, speaker_embeds)}
 
 
+
+
+plt.figure
+#plt.plot(X, y_hubert, label='HuBERT')
+plt.plot(X, y_mod_cpc, label='Modified CPC')
+plt.plot(X, y_vq_wav2vec, label='VQ Wav2Vec')
+plt.plot(X, y_wav2vec, label='Wav2Vec')
+#plt.plot(X, y_wav2vec2, label='Wav2Vec 2.0')
+#plt.plot(X, y_wav2vec2_xlsr, label='Wav2Vec XLSR')
+
+plt.title('Inference Times vs. Input Size for 3 Audio Embedding Models')
+plt.ylabel('Inference Times')
+plt.xlabel('Input Size')
+plt.grid()
+plt.legend()
+
+plt.savefig("plot.png")
+
+
+
+
 ## Run the interactive demo
 interactive_diarization(similarity_dict, wav_fpath, wav_splits, show_time=True)
+
+
