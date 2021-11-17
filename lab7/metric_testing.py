@@ -95,26 +95,8 @@ for i in sampling_rates:
     similarity_dict = {name: cont_embeds @ speaker_embed for name, speaker_embed in 
                        zip(speaker_names, speaker_embeds)}
 
-np.savez('./metrics.npz', nonsecure_inf_time,
+np.savez('./metrics.npz', sampling_rates,
+                          nonsecure_inf_time,
                           secure_inf_time,
                           accuracies)
-
-plt.figure
-X = sampling_rates
-plt.plot(X, nonsecure_inf_time, label='Nonsecure Query')
-plt.plot(X, secure_inf_time, label='Secure Query with Biometric Salting')
-plt.title('Query Times vs. Sampling Rate for a Test Audio')
-plt.ylabel('Query Times')
-plt.xlabel('Audio Sampling Rate')
-plt.grid()
-plt.legend()
-plt.savefig("inference_times.png")
-
-plt.figure
-plt.plot(X, accuracies, label='Diarization Accuracy')
-plt.title('Inference Times vs. Input Size for 3 Audio Embedding Models')
-plt.ylabel('Inference Times')
-plt.xlabel('Input Size')
-plt.grid()
-plt.legend()
 

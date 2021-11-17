@@ -112,26 +112,6 @@ similarity_dict = {name: cont_embeds @ speaker_embed for name, speaker_embed in
 
 
 
-
-plt.figure
-#plt.plot(X, y_hubert, label='HuBERT')
-plt.plot(X, y_mod_cpc, label='Modified CPC')
-plt.plot(X, y_vq_wav2vec, label='VQ Wav2Vec')
-plt.plot(X, y_wav2vec, label='Wav2Vec')
-#plt.plot(X, y_wav2vec2, label='Wav2Vec 2.0')
-#plt.plot(X, y_wav2vec2_xlsr, label='Wav2Vec XLSR')
-
-plt.title('Inference Times vs. Input Size for 3 Audio Embedding Models')
-plt.ylabel('Inference Times')
-plt.xlabel('Input Size')
-plt.grid()
-plt.legend()
-
-plt.savefig("plot.png")
-
-
-
-
 ## Run the interactive demo
 interactive_diarization(similarity_dict, wav_fpath, wav_splits, show_time=True)
 
