@@ -35,7 +35,7 @@ All group members met with the course staff to discuss the above.
 ----
 1. Are you making sufficient progress towards completing your final project? Explain why or why not. If not, please report how you plan to change the scope and/or focus of your project accordingly.
 
-We are making sufficient progress towards completing the project. Alex has finished implementing the binary shuffling cryptographic technique and integrated into our pipeline. It was written in the same manner as the biometric salting so all that is necessary to switch between the two in benchmarking is simply to change one line of code.
+We are making sufficient progress towards completing the project. Alex has finished implementing the binary shuffling cryptographic technique and integrated into our pipeline. It was written in the same manner as the biometric salting so all that is necessary to switch between the two in benchmarking is simply to change one line of code. This method works by associating each enrolled user with a binary key. After binarizing the input feature vectors, a given feature vector can be queried against a given enrollment by shuffling the bits of the feature vector according to the shuffling key.
 
 2. Based on your work today / this week, and your answer to (1), what are your group's planned next steps?
 
