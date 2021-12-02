@@ -31,14 +31,17 @@ accuracies = []
 
 sample_rate = args.sampling_rate
 
+
+print("Starting work")
+timer_start = timer()
+
 # Cut some segments from single speakers as reference audio
 segments = [[0, 5.5], [6.5, 12], [17, 25]]
 speaker_names = ["Kyle Gass", "Sean Evans", "Jack Black"]
 speaker_wavs = [wav[int(s[0] * sample_rate):int(s[1] * sample_rate)] for s in segments]
-    
+
 encoder = VoiceEncoder("cpu")
 speaker_embeds = [encoder.embed_utterance(speaker_wav) for speaker_wav in speaker_wavs]
-
 
 if args.secure_method != 'nonsecure':
     # Enroll users
@@ -56,7 +59,6 @@ if args.secure_method != 'nonsecure':
 
 _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True)
 
-timer_start = timer()
 
 if args.secure_method == 'nonsecure':
     for embedding, split in zip(cont_embeds, wav_splits):
