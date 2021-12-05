@@ -11,9 +11,18 @@ from random_projections import query as query_random_proj
 from binary_shuffling import enroll as enroll_binary_shuffling
 from binary_shuffling import query as query_binary_shuffling
 
+from binary_lsh import enroll as enroll_lsh_shuffling
+from binary_lsh import query as query_lsh_shuffling
+
 from timeit import default_timer as timer
 
 import argparse
+
+method_table = {
+    'binary_lsh': {'enroll': enroll_lsh_shuffling, 'query': query_lsh_shuffling},
+    'binary_shuffling': {'enroll': enroll_binary_shuffling, 'query': query_binary_shuffling},
+    'random_projections': {'enroll': enroll_random_proj, 'query': query_random_proj}
+}
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--sampling_rate", required=True, type=float)
@@ -51,10 +60,7 @@ if args.secure_method != 'nonsecure':
     enrollments = []
     for i in range(len(speaker_passwords)):
         name, password, feature = speaker_names[i], speaker_passwords[i], speaker_embeds[i]
-        if args.secure_method == 'binary_shuffling':
-            enroll_binary_shuffling(name, password, feature, enrollments)
-        else:
-            enroll_random_proj(name, password, feature, enrollments)
+        method_table[args.secure_method]['enroll'](name, password, feature, enrollments)
 
 
 _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True)
@@ -75,10 +81,7 @@ else:
     # Query each feature vector securely
     predicted_speakers_secure = []
     for embedding, split in zip(cont_embeds, wav_splits):
-        if args.secure_method == 'binary_shuffling':
-            lowest_e = query_binary_shuffling(embedding, enrollments)
-        else:
-            lowest_e = query_random_proj(embedding, enrollments)
+        lowest_e = method_table[args.secure_method]['query'](embedding, enrollments)
 
 timer_end = timer()
 
