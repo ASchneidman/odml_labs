@@ -11,17 +11,21 @@ from random_projections import query as query_random_proj
 from binary_shuffling import enroll as enroll_binary_shuffling
 from binary_shuffling import query as query_binary_shuffling
 
-from binary_lsh import enroll as enroll_lsh_shuffling
-from binary_lsh import query as query_lsh_shuffling
+from binary_lsh import enroll as enroll_lsh
+from binary_lsh import query as query_lsh
+
+from binary_nearest_neighbors import enroll as enroll_bnn
+from binary_nearest_neighbors import query as query_bnn
 
 from timeit import default_timer as timer
 
 import argparse
 
 method_table = {
-    'binary_lsh': {'enroll': enroll_lsh_shuffling, 'query': query_lsh_shuffling},
+    'binary_lsh': {'enroll': enroll_lsh, 'query': query_lsh},
     'binary_shuffling': {'enroll': enroll_binary_shuffling, 'query': query_binary_shuffling},
-    'random_projections': {'enroll': enroll_random_proj, 'query': query_random_proj}
+    'random_projections': {'enroll': enroll_random_proj, 'query': query_random_proj},
+    'binary_nn': {'enroll': enroll_bnn, 'query': query_bnn}
 }
 
 parser = argparse.ArgumentParser()
