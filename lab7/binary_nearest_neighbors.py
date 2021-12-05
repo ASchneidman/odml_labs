@@ -35,8 +35,8 @@ def enroll(name, pin, feature_vector, enrollment):
     if (len(enrollment) > 0):
         A, w = enrollment[0].A, enrollment[0].w
     else:
-        A = np.diag(np.random.randn(512, feature_vector.shape[0]))
-        w = np.random.uniform(high=1., size=(512,))
+        A = np.random.randn(10, feature_vector.shape[0])
+        w = np.random.uniform(high=1., size=(10,))
 
     template = np.ceil(A @ feature_vector + w) % 2
 
