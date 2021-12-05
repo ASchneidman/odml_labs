@@ -65,23 +65,21 @@ if args.secure_method != 'nonsecure':
 
 _, cont_embeds, wav_splits = encoder.embed_utterance(wav, return_partials=True)
 
-
+identified_speaker = []
 if args.secure_method == 'nonsecure':
-    for embedding, split in zip(cont_embeds, wav_splits):
-        best_sim = float("-inf")
-        best_name = None
-        for name, speaker_embed in zip(speaker_names, speaker_embeds):
-            sim = embedding @ speaker_embed
-            
-            if sim > best_sim:
-                # Note, best similarity here is the LARGEST, not smallest
-                best_sim = sim
-                best_name = name
+    similarity_dict = {name: (cont_embeds @ speaker_embed).reshape(-1, 1) for name, speaker_embed in 
+                    zip(speaker_names, speaker_embeds)}
+    name_indices = list(similarity_dict.keys())
+    similarities = np.concatenate(list(similarity_dict.values()), axis=1)
+    for i in range(len(wav_splits)):
+        identified_speaker.append(name_indices[np.argmax(similarities[i])])
+
 else:
     # Query each feature vector securely
     predicted_speakers_secure = []
     for embedding, split in zip(cont_embeds, wav_splits):
         lowest_e = method_table[args.secure_method]['query'](embedding, enrollments)
+        identified_speaker.append(lowest_e.name)
 
 timer_end = timer()
 

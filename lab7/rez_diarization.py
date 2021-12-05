@@ -33,7 +33,6 @@ print(f"Passwords: {speaker_passwords}")
 enrollments = []
 for i in range(len(speaker_passwords)):
     name, password, feature = speaker_names[i], speaker_passwords[i], speaker_embeds[i]
-
     enroll(name, password, feature, enrollments)
 
 
