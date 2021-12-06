@@ -25,6 +25,8 @@ from binary_nearest_neighbors import query as query_bnn
 from  utils_labels import *
 import csv
 
+from timeit import default_timer as timer
+
 
 
 if __name__ == "__main__":
@@ -47,8 +49,11 @@ if __name__ == "__main__":
 
     audio_path= "../../vox_converse_data"
     files = os.listdir(audio_path+"/audio")
-    der_dict={}
-    file_count=0
+
+
+    average_time = 0.0
+    average_rel_acc = 0.0
+    num_files = 0
 
     #iterate through each audio file and it's annotation file in the dataset
     for file in files:
@@ -85,6 +90,10 @@ if __name__ == "__main__":
         # embed each segment
         speaker_embeds = [encoder.embed_utterance(speaker_wav) for speaker_wav in speaker_wavs]
 
+
+        # start timer
+        start_time = timer()
+
         # enroll each speaker
         if args.secure_method != 'nonsecure':
             # Enroll users
@@ -115,6 +124,11 @@ if __name__ == "__main__":
                 lowest_e = method_table[args.secure_method]['query'](embedding, enrollments)
                 identified_speaker.append(lowest_e.name)
 
+        end_time = timer()
+        num_files += 1
+
+        average_time += (end_time - start_time)
+
         if args.relative_accuracy:
             identified_speaker_nonsecure = []
             similarity_dict = {name: (cont_embeds @ speaker_embed).reshape(-1, 1) for name, speaker_embed in 
@@ -129,4 +143,11 @@ if __name__ == "__main__":
                 accuracy += float(speaker == speaker_nonsecure)
 
             accuracy /= len(identified_speaker)
+            average_rel_acc += accuracy
             print(f"Relative Accuracy: {accuracy}")
+
+    average_time /= num_files
+    average_rel_acc /= num_files
+    print(f"Average time: {num_files}, Average Rel. Accuracy {average_rel_acc}")
+
+    
