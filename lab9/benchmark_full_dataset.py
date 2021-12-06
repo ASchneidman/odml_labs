@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     sample_rate = args.sampling_rate
 
-    audio_path= "../../vox_converse_data"
+    audio_path= "../voxconverse"
     files = os.listdir(audio_path+"/audio")
 
 
@@ -60,7 +60,7 @@ if __name__ == "__main__":
         if '.wav' not in file:
             continue
         basefile_name = file[0:-4]
-        annotations_filepath= audio_path+"/annotations/dev/"+basefile_name+".rttm"
+        annotations_filepath= audio_path+"/dev/"+basefile_name+".rttm"
         gold_labels = get_goldlabels(annotations_filepath)
 
         speakers = set([l[0] for l in gold_labels])
@@ -150,4 +150,3 @@ if __name__ == "__main__":
     average_rel_acc /= num_files
     print(f"Average time: {num_files}, Average Rel. Accuracy {average_rel_acc}")
 
-    
