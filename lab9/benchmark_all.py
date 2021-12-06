@@ -87,6 +87,7 @@ if __name__ == "__main__":
             print(f"Sample Rate: {sampling_rate}, Method Name: {method_name}")
 
             for _ in range(NUM_ITERS):
+                np.random.seed()
                 # start timer
                 start_time = timer()
 

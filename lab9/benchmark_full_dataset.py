@@ -42,13 +42,15 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--sampling_rate", required=True, type=float)
     parser.add_argument("--secure_method", required=False, default="nonsecure", type=str)
-    parser.add_argument("--relative_accuracy", required=False, action="store_true")
+    parser.add_argument("--relative_accuracy", required=True, action="store_true")
     args = parser.parse_args()
 
     sample_rate = args.sampling_rate
 
     audio_path= "../voxconverse"
     files = os.listdir(audio_path+"/audio")
+
+    encoder = VoiceEncoder("cpu")
 
 
     average_time = 0.0
@@ -86,7 +88,6 @@ if __name__ == "__main__":
         # cut out the template segments
         speaker_wavs = [wav[int(s[0] * sample_rate):int(s[1] * sample_rate)] for s in templates.values()]
 
-        encoder = VoiceEncoder("cpu")
         # embed each segment
         speaker_embeds = [encoder.embed_utterance(speaker_wav) for speaker_wav in speaker_wavs]
 
