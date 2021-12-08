@@ -57,7 +57,7 @@ Our method did not require training a model.
 ----
 1. Everything else: Do you have logs you can use to estimate the amount of energy + carbon that went in to all project development? Other ways of estimating? Was your device plugged in and running for the entire semester?
 
-To get the benchmarks used in this report and the final report, the script took 9628 minutes. Thus, we can estimate the entire power draw for creating this report in particular is 1,155.36 Watt Hours, or 1.15536 kWhs. This gives .8 lbs of C02 emitted for this report. We let the device plugged in almost all semester (probably 3 months total), which gives 6,480 Watt hours, or 6.48 kWh, emitting 6.92 Lbs of C02. 
+To get the benchmarks used in this report and the final report, the script took 9628 minutes. Thus, we can estimate the entire power draw for creating this report in particular is 1,155.36 Watt Hours, or 1.15536 kWhs. This gives 1.23 lbs of C02 emitted for this report. We let the device plugged in almost all semester (probably 3 months total), which gives 6,480 Watt hours, or 6.48 kWh, emitting 6.92 Lbs of C02. 
 
 2. Supply chain / lifecycle analysis: Can you estimate the additional footprint due to manufacturing hardware? Lifetime energy use of your project if it was deployed in the real world?
 
